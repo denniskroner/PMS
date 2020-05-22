@@ -19,7 +19,9 @@ Launch the client in a separate terminal by entering './client.sh $clientId $req
   Error: user already exists <br>
   $ ./init.sh newUser <br>
   OK: user created <br>
+  
 <br><br>
+
 <b>insert</b> check that a client id, user name and service name were given, ask user to input login
 and password, and send init request to server: <br>
   $ ./client.sh client1 insert user1 Bank/myNewBank <br> 
@@ -28,7 +30,9 @@ and password, and send init request to server: <br>
   Please write password: #Written by client.sh <br>
   myPassword #Written by user <br>
   OK: service created <br>
+
 <br><br>
+
 <b>edit</b> check that a client id, user name and service name were given, ask user to input login
 and password, and send init request to server: <br>
   $ ./client.sh client1 insert user1 Bank/myNewBank <br> 
@@ -37,12 +41,16 @@ and password, and send init request to server: <br>
   Please write password: #Written by client.sh <br>
   myPassword #Written by user <br>
   OK: service created <br>
+  
 <br><br>
+
 <b>show</b> check that a client id, a user name, and a service were given, send a show request to the server and print the result: <br>
 $ ./client.sh client1 show user1 Bank/aib.ie <br>
 user1's login for Bank/aib.ie is: mylogin <br>
 user1's password for Bank/aib.ie is: hunter2 <br>
+
 <br><br>
+
 <b>ls</b> check that (at least) a client id and user name were given, send a show request to the server
 and print the result: <br>
 $ ./client.sh client1 ls user1 <br>
@@ -60,3 +68,18 @@ user1
 |----Bank
      |----aib.ie
 </pre>
+
+<br><br>
+
+<b>rm</b> A user might not use a service anymore, or might not want to store the password for it in the password manager, they must then be able to delete the information for the service from the system: <br>
+$ ./rm.sh google.com <br>
+Error: parameters problem<br>
+$ ./rm.sh user123 google.com <br>
+Error: user does not exist <br>
+$ ./rm.sh user1 google.com <br>
+Error: service does not exist <br>
+$ ./rm.sh user1 Bank/aib.ie OK: service removed <br>
+
+<br><br>
+<b>shutdown</b> send a shutdown request to the server:<br>
+$ ./rm.sh user1 shutdown
