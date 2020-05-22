@@ -43,7 +43,7 @@ $ ./client.sh client1 show user1 Bank/aib.ie <br>
 user1's login for Bank/aib.ie is: mylogin <br>
 user1's password for Bank/aib.ie is: hunter2 <br>
 <br><br>
-<b>ls<b> check that (at least) a client id and user name were given, send a show request to the server
+<b>ls</b> check that (at least) a client id and user name were given, send a show request to the server
 and print the result: <br>
 $ ./client.sh client1 ls user1 <br>
   OK: <br>
