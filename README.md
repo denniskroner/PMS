@@ -50,7 +50,7 @@ OK: <br>
 user1 <br>
 |
 |---|---Bank <br>
-|   |   |---aib.ie <br>
+|&nbsp;|&nbsp;|---aib.ie <br>
 |---|---UCD CONNECT <br>
 $ ./client.sh client1 ls user1 Bank <br>
 OK: <br>
