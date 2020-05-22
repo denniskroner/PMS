@@ -14,9 +14,9 @@ mkfifo "$1.pipe"
 
 case "$2" in
         init)
-                if [ -e server.pipe ]; then
+                if [ -e server_pipe ]; then
                         if [ -n "$1" ] & [ -n "$3" ] ; then
-                                echo "$@" > server.pipe
+                                echo "$@" > server_pipe
                                 read input < "$1.pipe"
                                 echo "$input"
                         else
@@ -25,15 +25,20 @@ case "$2" in
                 fi
                 ;;
         insert)
-                if [ -e server.pipe ]; then
+                if [ -e server_pipe ]; then
                         if [ -n "$1" ] && [ -n "$3" ] && [ -n "$4" ]; then
                                 echo "Please write login:"
                                 read userLogin
-                                echo "Please write password:"
+                                echo "Please write password"
                                 read userPassword
 
-                                loginPw="$userLogin\n$userPassword"
-                                echo "$@" "$loginPw" > server.pipe
+                                encryptLogin="$3""$4"
+                                encryptPW="$4""$3"
+
+                                userLogin=$(./encrypt.sh "$encryptLogin" "$userLogin")
+                                userPassword=$(./encrypt.sh "$encryptPW" "$userPassword")
+                                loginPw="$userLogin\\n$userPassword"
+                                echo "$@" "$loginPw" > server_pipe
                                 read input < "$1.pipe"
                                 echo "$input"
                         else
@@ -42,13 +47,18 @@ case "$2" in
                 fi
                 ;;
         show)
-                if [ -e server.pipe ]; then
+                if [ -e server_pipe ]; then
                         if [ -n "$1" ] && [ -n "$3" ] && [ -n "$4" ]; then
-                                echo "$@" > server.pipe
+                                echo "$@" > server_pipe
                                 OUT=$(mktemp)
                                 cat "$1.pipe" > $OUT
                                 if [ "$(head -n 1 $OUT)" != "Error: service does not exist" ]; then
-                                        echo -e "$3's login for $4 is: $(head -n 1 $OUT)\n$3's password for $4 is: $(tail -n 1 $OUT)"
+                                        decryptLogin="$3""$4"
+                                        decryptPW="$4""$3"
+
+                                        userLogin=$(./decrypt.sh "$decryptLogin" "$(head -n 1 $OUT)")
+                                        userPassword=$(./decrypt.sh "$decryptPW" "$(tail -n 1 $OUT)")
+                                        echo -e "$3's login for $4 is: $userLogin\n$3's password for $4 is: $userPassword"
                                 else
                                         echo "Error: service does not exist"
                                 fi
@@ -59,17 +69,34 @@ case "$2" in
                 fi
                 ;;
         edit)
-                if [ -e server.pipe ]; then
+                if [ -e server_pipe ]; then
                         if [ -n "$1" ] && [ -n "$3" ] && [ -n "$4" ]; then
-                                echo "$1" "show" "$3" "$4" > server.pipe
+                                echo "$1" "show" "$3" "$4" > server_pipe
                                 OUT=$(mktemp)
                                 cat "$1.pipe" > $OUT
-                                nano $OUT
-                                loginPw="$(head -n 1 $OUT)\\n$(tail -n 1 $OUT)"
 
-                                echo "$1" "update" "$3" "$4" "$loginPw" > server.pipe
-                                read input < "$1.pipe"
-                                echo "$input"
+                                if [ "$(head -n 1 $OUT)" != "Error: service does not exist" ]; then
+                                        decryptLogin="$3""$4"
+                                        decryptPW="$4""$3"
+
+                                        userLogin=$(./decrypt.sh "$decryptLogin" "$(head -n 1 $OUT)")
+                                        userPassword=$(./decrypt.sh "$decryptPW" "$(tail -n 1 $OUT)")
+                                        echo -e "$userLogin\n$userPassword" > $OUT
+                                        nano $OUT
+                                        encryptLogin="$3""$4"
+                                        encryptPW="$4""$3"
+
+                                        userLogin=$(./encrypt.sh "$encryptLogin" "$(head -n 1 $OUT)")
+                                        userPassword=$(./encrypt.sh "$encryptPW" "$(tail -n 1 $OUT)")
+                                        loginPw="$userLogin\n$userPassword"
+
+                                        #loginPw="$(head -n 1 $OUT)\\n$(tail -n 1 $OUT)"
+                                        echo "$1" "update" "$3" "$4" "$loginPw" > server_pipe
+                                        read input < "$1.pipe"
+                                        echo "$input"
+                                else
+                                        echo "Error: service does not exist"
+                                fi
                                 rm -r $OUT
                         else
                                 echo "Error: parameter problem"
@@ -77,9 +104,9 @@ case "$2" in
                 fi
                 ;;
         rm)
-                if [ -e server.pipe ]; then
+                if [ -e server_pipe ]; then
                         if [ -n "$1" ] && [ -n "$3" ] && [ -n "$4" ]; then
-                                echo "$@" > server.pipe
+                                echo "$@" > server_pipe
                                 read input < "$1.pipe"
                                 echo "$input"
                         else
@@ -89,9 +116,9 @@ case "$2" in
                 ;;
 
         ls)
-                if [ -e server.pipe ]; then
+                if [ -e server_pipe ]; then
                         if [ -n "$1" ] && [ -n "$3" ]; then
-                                echo "$@" > server.pipe
+                                echo "$@" > server_pipe
                                 cat $1.pipe
                         else
                                 echo "Error: parameter problem"
@@ -99,8 +126,8 @@ case "$2" in
                 fi
                 ;;
         shutdown)
-                if [ -e server.pipe ]; then
-                        echo "$@" > server.pipe
+                if [ -e server_pipe ]; then
+                        echo "$@" > server_pipe
                         read input < "$1.pipe"
                         echo "$input"
                 fi
@@ -111,4 +138,5 @@ case "$2" in
                 exit 1
 esac
 rm "$1.pipe"
+
 exit 0

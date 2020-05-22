@@ -15,13 +15,9 @@ fi
 
 ./P.sh "$1"
 if [ "$?" -eq 0 ]; then
-        present_wd="$(pwd)"
         if [ "$#" -eq 1 ]; then
-                cd "$user_dir"
-                cd ..
-                service_folder=$(tree -A -N --noreport "$1")
+                service_folder=$(tree -A -N --noreport "$user_dir")
                 echo -e "OK:\n$service_folder"
-                cd "$present_wd"
         else
                 folder="$user_dir/$2"
                 if [ ! -d "$folder" ]; then
@@ -29,12 +25,8 @@ if [ "$?" -eq 0 ]; then
                         ./V.sh "$1"
                         exit 1
                 else
-                        cd "$folder"
-                        cd ..
-                        bn_folder=$(basename "$folder")
-                        service_folder=$(tree -A -N --noreport "$bn_folder")
+                        service_folder=$(tree -A -N --noreport "$folder")
                         echo -e "OK:\n$service_folder"
-                        cd "$present_wd"
                 fi
         fi
 fi

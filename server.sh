@@ -1,16 +1,17 @@
 #!/bin/bash
 
-if [ -e server.pipe ]; then
-        rm -r server.pipe
+if [ -e server_pipe ]; then
+        rm -r server_pipe
 fi
 
+echo "Server Started"
 mkdir -p "$(pwd)/Server"
 
-mkfifo server.pipe
+mkfifo server_pipe
 while true; do
-        read -r clientID check_case user_name user_service user_login < server.pipe
+        read -r clientID check_case user_name user_service user_login < server_pipe
         sleep 1
-
+            
         arr=()
         i=0
         for val in "$user_name" "$user_service" "$user_login"; do
@@ -46,13 +47,13 @@ while true; do
                         ./ls.sh "${arr[@]}" > "$clientID.pipe" &
                         ;;
                 shutdown)
-                        echo "Sever closed" > "$clientID.pipe"
-                        rm server.pipe
+                        echo "Sever closed" > $clientID_pipe
+                        rm server_pipe
                         exit 0
                         ;;
                 *)
                         echo "Error: bad request" > "$clientID.pipe"
-                        rm server.pipe
+                        rm server_pipe
                         exit 1
         esac
 done
