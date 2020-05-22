@@ -48,15 +48,16 @@ and print the result: <br>
 $ ./client.sh client1 ls user1 <br>
 OK: <br>
 <pre>
-user1 <br>
+user1
 |
-|---|---Bank <br>
-|&nbsp;|&nbsp;|---aib.ie <br>
-|---|---UCD CONNECT <br>
+|----Bank
+|    |----aib.ie
+|
+|----UCD CONNECT <br>
 $ ./client.sh client1 ls user1 Bank <br>
 OK: <br>
-user1 <br>
+user1 
 |
-|---|---Bank <br>
-|   |   |---aib.ie <br>
+|----Bank <br>
+|    |----aib.ie
 </pre>
