@@ -28,5 +28,11 @@ and password, and send init request to server: <br>
   Please write password: #Written by client.sh <br>
   myPassword #Written by user <br>
   OK: service created <br>
+<br><br>
+<b>show</b> check that a client id, a user name, and a service were given, send a show request to the server and print the result: <br>
+$ ./client.sh client1 show user1 Bank/aib.ie <br>
+user1's login for Bank/aib.ie is: mylogin <br>
+user1's password for Bank/aib.ie is: hunter2 <br>
+<br><br>
   
   
