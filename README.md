@@ -1,7 +1,7 @@
 # PMS
 Password Management System Simulation using Bash and Linux
 
-A password management system helps us keep track of all our passwords for different systems, instead of relying on the same password for everything because of poor memory. Here I will provide a password manager on a client-server model to mimic centralised password managers.
+A password management system helps us keep track of all our passwords for different systems, instead of relying on the same password for everything because of poor memory. Here I will provide a password manager on a client-server model to mimic centralised password managers. The payload is encrypted in the client before sending it to the server, and decrypted when retrieving it.
 
 The PMS has the the following functions: <br><br>
 <b>init</b> Create a new folder to store a user’s passwords. <br>
