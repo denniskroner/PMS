@@ -46,13 +46,15 @@ user1's password for Bank/aib.ie is: hunter2 <br>
 <b>ls</b> check that (at least) a client id and user name were given, send a show request to the server
 and print the result: <br>
 $ ./client.sh client1 ls user1 <br>
-  <tab>OK: <br>
-  user1 <br>
-    Bank <br>
-        aib.ie <br>
-    UCD CONNECT <br>
+OK: <br>
+|---user1 <br>
+|   |---Bank <br>
+|   |---|---aib.ie <br>
+|   |
+|   |---UCD CONNECT <br>
 $ ./client.sh client1 ls user1 Bank <br>
-  OK: <br>
-  user1 <br>
-    Bank <br>
-        aib.ie <br>
+OK: <br>
+|---user1 <br>
+|   |---Bank <br>
+|   |---|---aib.ie <br>
+
