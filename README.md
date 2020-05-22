@@ -47,6 +47,7 @@ user1's password for Bank/aib.ie is: hunter2 <br>
 and print the result: <br>
 $ ./client.sh client1 ls user1 <br>
 OK: <br>
+<pre>
 user1 <br>
 |
 |---|---Bank <br>
@@ -58,4 +59,4 @@ user1 <br>
 |
 |---|---Bank <br>
 |   |   |---aib.ie <br>
-
+</pre>
