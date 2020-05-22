@@ -14,19 +14,19 @@ The PMS has the the following functions: <br><br>
 Navigate to the folder containing all PMS scripts. Then add the execution rights for all scripts by entering 'chmod u+x script_name.sh' in terminal. Launch the server in the terminal by entering './server.sh'. The server runs in an infinit loop until stopped by the client (this functionality is just implemented in order to stop the server after finishing the simulation).<br>
 Launch the client in a separate terminal by entering './client.sh $clientId $req [args]' where $clienId is the unique identifier of this client and $req is one of init, insert, show, edit, rm, ls or shutdown. args is a list of arguments an depends on the service used. See the following example:
 
-<b>init<b> check that a client id and user name were given and send an init request to the server:<br>
-  $ ./client.sh client1 init user1
-  Error: user already exists
-  $ ./init.sh newUser
-  OK: user created
+<b>init</b> check that a client id and user name were given and send an init request to the server:<br>
+  $ ./client.sh client1 init user1 <br>
+  Error: user already exists <br>
+  $ ./init.sh newUser <br>
+  OK: user created <br>
 <br><br>
-<b>insert<b> check that a client id, user name and service name were given, ask user to input login
-and password, and send init request to server:
-  $ ./client.sh client1 insert user1 Bank/myNewBank 
-  Please write login: #Written by client.sh
-  myLogin #Written by user
-  Please write password: #Written by client.sh
-  myPassword #Written by user
-  OK: service created
+<b>insert</b> check that a client id, user name and service name were given, ask user to input login
+and password, and send init request to server: <br>
+  $ ./client.sh client1 insert user1 Bank/myNewBank <br> 
+  Please write login: #Written by client.sh <br>
+  myLogin #Written by user <br>
+  Please write password: #Written by client.sh <br>
+  myPassword #Written by user <br>
+  OK: service created <br>
   
   
