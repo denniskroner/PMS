@@ -29,10 +29,30 @@ and password, and send init request to server: <br>
   myPassword #Written by user <br>
   OK: service created <br>
 <br><br>
+<b>edit</b> check that a client id, user name and service name were given, ask user to input login
+and password, and send init request to server: <br>
+  $ ./client.sh client1 insert user1 Bank/myNewBank <br> 
+  Please write login: #Written by client.sh <br>
+  myLogin #Written by user <br>
+  Please write password: #Written by client.sh <br>
+  myPassword #Written by user <br>
+  OK: service created <br>
+<br><br>
 <b>show</b> check that a client id, a user name, and a service were given, send a show request to the server and print the result: <br>
 $ ./client.sh client1 show user1 Bank/aib.ie <br>
 user1's login for Bank/aib.ie is: mylogin <br>
 user1's password for Bank/aib.ie is: hunter2 <br>
 <br><br>
-  
-  
+<b>ls<b> check that (at least) a client id and user name were given, send a show request to the server
+and print the result: <br>
+$ ./client.sh client1 ls user1 <br>
+  OK: <br>
+  user1 <br>
+    Bank <br>
+        aib.ie <br>
+    UCD CONNECT <br>
+$ ./client.sh client1 ls user1 Bank <br>
+  OK: <br>
+  user1 <br>
+    Bank <br>
+        aib.ie <br>
